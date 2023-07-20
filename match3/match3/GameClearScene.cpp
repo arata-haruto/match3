@@ -31,15 +31,21 @@ int GameClearScene_Initialize(void)
 	int ret = 0;
 	//画像の読み込み
 	GameClearImage = LoadGraph("images/gameclear.png")
-	//音源の読み込み
-	GameClearSE = LoadSoundMem("sounds/gameclear_se.mp3");
+		//音源の読み込み
+		GameClearSE = LoadSoundMem("sounds/gameclear_se.mp3");
 
 	GameClearFlag = 0;
 
 	//エラーチェック
+	if (GameClearImage == D_ERROR)
+	{
+		ret = D_ERROR;
+	}
+
+
 	if (GameClearSE == -1)
 	{
-		ret = -1;
+		ret = D_ERROR;
 	}
 	return ret;
 }
