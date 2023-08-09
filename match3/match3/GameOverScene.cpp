@@ -33,7 +33,7 @@ int GameOverScene_Initialize(void)
 	{
 		ret = -1;
 	}
-	if (GaneOverSE == -1)
+	if (GameOverSE == -1)
 	{
 		ret = -1;
 	}

@@ -126,7 +126,7 @@ do {
 	DrawRotaGraph(PosX, 80, 0.5f, 0, NumberImage[tmp_level % 10], TRUE);
 	tmp_level /= 10;
 	PosX -= 30;
-} while (tmp_level > 0;)
+} while (tmp_level > 0);
 
 //ƒXƒRƒA‚Ì•`‰æ
 PosX = 620;
