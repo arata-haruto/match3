@@ -1,12 +1,12 @@
 #include"GameMainScene.h"
 #include"DxLib.h"
-#include "Stage.h"
-#include "SceneManager.h"
+#include"Stage.h"
+#include"SceneManager.h"
 
 /*****************************
 *マクロ定義
 *****************************/
-#define TIMELIMIT      (3600 * 3)　//制限時間
+#define TIMELIMIT (3600 * 3)       //制限時間
 #define NUMBER_IMAGE_MAX (10)      //数字画像数
 
 /*****************************
@@ -66,7 +66,7 @@ int GameMainScene_Initialize(void)
 		GameLevel++;  //ゲームレベルの更新
 		Set_StageMission(3);  //ミッションを増やす
 	}
-	GameTime = TIMELIMIT;   //制限時間の初期化
+	GameTime = TIMELIMIT; //制限時間の初期化
 
 	return ret;
 }
@@ -81,7 +81,7 @@ void GameMainScene_Update(void)
 	switch (Get_StageState())
 	{
 	case 0:
-		selectBlock();      //ブロックを選択
+		SelectBlock();      //ブロックを選択
 		break;
 	case 2:
 		MoveBlock();        //ブロックを移動させる。

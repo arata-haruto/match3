@@ -34,6 +34,10 @@ void Input_Initialize(void)
 *****************************/
 void Input_Update(void)
 {
+	//マウス入力情報の取得
+	old_button = now_button;
+	now_button = GetMouseInput();
+
 	//マウスカーソル座標の取得
 	GetMousePoint(&mouse_position_x, &mouse_position_y);
 
