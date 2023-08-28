@@ -56,7 +56,7 @@ int GameMainScene_Initialize(void)
 	//ゲームプレイが初回かどうか？
 	if (GameCount == 0)
 	{
-		GameScore - 0;   //スコアの初期化
+		GameScore = 0;   //スコアの初期化
 		GameLevel = 1;   //ゲームレベルの初期化
 		Set_StageMission(3); //ミッションの初期化
 		GameCount++;     //次回の設定

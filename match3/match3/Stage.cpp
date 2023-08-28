@@ -79,8 +79,7 @@ int StageInitialize(void)
 	int i;
 
 //画像読み込み
-	LoadDivGraph("images/block.png", BLOCK_IMAGE_MAX, BLOCK_IMAGE_MAX, 1,
-		BLOCKSIZE, BLOCKSIZE, BlockImage);
+	LoadDivGraph("images/block.png", BLOCK_IMAGE_MAX, BLOCK_IMAGE_MAX, 1,BLOCKSIZE, BLOCKSIZE, BlockImage);
 	StageImage = LoadGraph("images/stage.png");
 //音源読み込み
 	ClickSE = LoadSoundMem("sounds/click_se.mp3");
@@ -143,25 +142,26 @@ void StageDraw(void) {
 	//ブロックを描画
 	for (int i = 0; i < HEIGHT; i++)
 	{
-		for(int j = 0;j<WIDTH;j++)
+		for (int j = 0; j < WIDTH; j++)
 		{
-		if (Block[i][j].flg == TRUE && Block[i][j].image != NULL)
-		{
-			DrawGraph(Block[i][j].x, Block[i][j].y, BlockImage[Block[i][j].image], TRUE);
+			if (Block[i][j].flg == TRUE && Block[i][j].image != NULL)
+			{
+				DrawGraph(Block[i][j].x, Block[i][j].y, BlockImage[Block[i][j].image], TRUE);
 
+			}
 		}
 	}
+	//選択ブロックを描画
+	DrawGraph(Select[SELECT_CURSOR].x * BLOCKSIZE, Select[SELECT_CURSOR].y * BLOCKSIZE, BlockImage[9], TRUE);
+	if (ClickStatus != E_NONE)
+	{
+		DrawGraph(Select[NEXT_CURSOR].x * BLOCKSIZE,
+			Select[NEXT_CURSOR].y * BLOCKSIZE, BlockImage[9], TRUE);
+	}
+	//ミッションを描画
+	SetFontSize(20);
+	DrawFormatString(590, 211, GetColor(255, 255, 255), "%3d", Stage_Mission);
 }
-//選択ブロックを描画
-DrawGraph(Select[SELECT_CURSOR].x* BLOCKSIZE, Select[SELECT_CURSOR].y*BLOCKSIZE, BlockImage[9], TRUE);
-if (ClickStatus != E_NONE)
-{
-	DrawGraph(Select[NEXT_CURSOR].x* BLOCKSIZE,
-		Select[NEXT_CURSOR].y* BLOCKSIZE, BlockImage[9], TRUE);
-}
-//ミッションを描画
-SetFontSize(20);
-DrawFormatString(590, 211, GetColor(255, 255, 255), "%3d", Stage_Mission);
 
 /*****************************
 *ステージ制御機能：ブロック生成処理
@@ -257,22 +257,18 @@ void SelectBlock(void)
 		//クリック効果音
 		PlaySoundMem(ClickSE, DX_PLAYTYPE_BACK);
 
-		if (ClickStatus == E_NONE{
+		if (ClickStatus == E_NONE){
 				Select[NEXT_CURSOR].x = Select[SELECT_CURSOR].x;
 				Select[NEXT_CURSOR].y = Select[SELECT_CURSOR].y;
-				CkickStatus = E_ONCE;
+				ClickStatus = E_ONCE;
 			}
 		else if (ClickStatus == E_ONCE &&
-			((abs(Select[NEXT_CURSOR].x - Select[SELECT_CURSOR].x)
-				== 1 &&
-				(abs(Select[NEXT_CURSOR].y - Select[SELECT_CURSOR].y)
-					== 0)) ||
-				(abs(Select[NEXT_CRUSOR].x - Select[SELECT_CURSOR].x)
-					== 0 &&
-					abs(Select[NEXT_CRUSOR].y - Select[SELECT_CURSOR].y ==
-						1)))
+			((abs(Select[NEXT_CURSOR].x - Select[SELECT_CURSOR].x)== 1 &&
+				(abs(Select[NEXT_CURSOR].y - Select[SELECT_CURSOR].y)== 0)) ||
+				(abs(Select[NEXT_CURSOR].x - Select[SELECT_CURSOR].x)== 0 &&
+					abs(Select[NEXT_CURSOR].y - Select[SELECT_CURSOR].y) ==1)))
 		{
-			Select[TMP_CURSOR].x = Select[SELECT__CURSOR].x;
+			Select[TMP_CURSOR].x = Select[SELECT_CURSOR].x;
 				Select[TMP_CURSOR].y = Select[SELECT_CURSOR].y;
 			ClickStatus = E_SECOND;
 		}
@@ -321,17 +317,22 @@ void FadeOutBlock(void)
 	static int BlendMode = 255;
 	int i, j;
 
+	//フェードアウト効果音
 	if (CheckSoundMem(FadeOutSE) == 0)
 	{
 		PlaySoundMem(FadeOutSE, DX_PLAYTYPE_BACK);
 	}
 
+	//描画モードをアルファブレンドにする
 	SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, BlendMode);
 	for (i = 1; i < HEIGHT - 1; i++)
 	{
 		for(j = 1; j < WIDTH - 1; j++)
 		{
-			if (Block[i][j].x, Block[i][j].y, BlockImage[Block[i][j].backup], TRUE);
+			if(Block[i][j].image == 0)
+			{
+			DrawGraph(Block[i][j].x, Block[i][j].y,
+				BlockImage[Block[i][j].backup], TRUE);
 		}
 	}
 
