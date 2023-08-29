@@ -39,7 +39,7 @@ void Input_Update(void)
 	now_button = GetMouseInput();
 
 	//マウスカーソル座標の取得
-	GetMousePoint(&mouse_position_x, &mouse_position_y);
+	GetMousePoint(&mouse_position_x,&mouse_position_y);
 
 }
 

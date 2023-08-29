@@ -57,7 +57,7 @@ int GameMainScene_Initialize(void)
 	if (GameCount == 0)
 	{
 		GameScore = 0;   //スコアの初期化
-		GameLevel = 1;   //ゲームレベルの初期化
+		GameLevel = 0;   //ゲームレベルの初期化
 		Set_StageMission(3); //ミッションの初期化
 		GameCount++;     //次回の設定
 	}
@@ -93,6 +93,7 @@ void GameMainScene_Update(void)
 		break;
 	}
 	GameTime--;
+
 	if (GameTime < 0)
 	{
 		Change_Scene(E_GAME_OVER);

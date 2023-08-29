@@ -232,7 +232,7 @@ void SelectBlock(void)
 	int Result;
 	//カーソル座標の取得
 	Select[SELECT_CURSOR].x = GetMousePositionX() / BLOCKSIZE;
-	Select[SELECT_CURSOR].x = GetMousePositionY() / BLOCKSIZE;
+	Select[SELECT_CURSOR].y = GetMousePositionY() / BLOCKSIZE;
 	//選択ブロックの範囲を制御
 	if (Select[SELECT_CURSOR].x < 0)
 	{
@@ -277,8 +277,9 @@ void SelectBlock(void)
 	//選択ブロックを交換する。
 	if (ClickStatus == E_SECOND)
 	{
-		TmpBlock = Block[Select[NEXT_CURSOR].y + 1][Select[NEXT_CURSOR].x + 1].image =
-			Block[Select[TMP_CURSOR].y + 1][Select[TMP_CURSOR].x + 1].image;
+		TmpBlock = Block[Select[NEXT_CURSOR].y + 1][Select[NEXT_CURSOR].x + 1].image;
+		Block[Select[TMP_CURSOR].y + 1][Select[TMP_CURSOR].x + 1].image =
+		Block[Select[TMP_CURSOR].y + 1][Select[TMP_CURSOR].x + 1].image;
 		Block[Select[TMP_CURSOR].y + 1][Select[TMP_CURSOR].x + 1].image = TmpBlock;
 
 		//連鎖が３つ以上か調べる
@@ -519,7 +520,12 @@ int combo_check(int y, int x)
 	{
 		if (CountH >= 3)
 		{
-			Item[ColorH - 1] += CountW;
+			Item[ColorH - 1] += CountH;
+			Stage_Score += CountH * 10;
+		}
+		if (CountW >= 3)
+		{
+			Item[ColorW - 1] += CountW;
 			Stage_Score += CountW * 10;
 		}
 		ret = TRUE;
@@ -574,6 +580,10 @@ Block[y][x].image = 0;
 (*cnt)++;
 
 if (Block[y][x + 1].image == Color)
+{
+	combo_check_w(y, x - 1, cnt, col);
+}
+if (Block[y][x - 1].image == Color)
 {
 	combo_check_w(y, x - 1, cnt, col);
 }
